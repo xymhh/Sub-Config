@@ -10,7 +10,7 @@ ipv6: false
 unified-delay: true
 tcp-concurrent: true
 log-level: warning
-find-process-mode: 'off'
+find-process-mode: "off"
 global-client-fingerprint: chrome
 keep-alive-idle: 600
 keep-alive-interval: 15
@@ -24,15 +24,15 @@ profile:
 # ----------------------------------------------------------------
 # 尝试识别流量的域名，即使请求是基于IP的，从而更准确地应用域名规则。
 sniffer:
-  enable: true
-  sniff:
-    HTTP:
-      ports: [80, 8080-8880]
-      override-destination: true
-    TLS:
-      ports: [443, 8443]
-    QUIC:
-      ports: [443, 8443]
+  enable: false
+  # sniff:
+  #   HTTP:
+  #     ports: [80, 8080-8880]
+  #     override-destination: true
+  #   TLS:
+  #     ports: [443, 8443]
+  #   QUIC:
+  #     ports: [443, 8443]
 
 # ----------------------------------------------------------------
 # TUN 模式 (适用于 OpenWrt / 路由器环境)
@@ -46,6 +46,7 @@ tun:
   auto-route: false
   auto-redirect: false
   auto-detect-interface: false
+  udp-timeout: 300
   # 指定 TUN 虚拟网卡的名称
   device: nikki
 
@@ -62,9 +63,9 @@ dns:
   fake-ip-filter-mode: blacklist
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter:
-    - 'rule-set:fake-ip-filter'
-    - '+.msftconnecttest.com'
-    - '+.msftncsi.com'
+    - "rule-set:fake-ip-filter"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
   default-nameserver:
     - tls://223.5.5.5
     - tls://223.6.6.6
@@ -78,7 +79,6 @@ dns:
     - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
 
-
 # ----------------------------------------------------------------
 # 外部控制与特定环境配置 (External Control & Environment)
 # ----------------------------------------------------------------
@@ -90,7 +90,7 @@ external-ui: ui
 # 网页控制面板资源文件地址
 external-ui-url: https://github.com/Zephyruso/zashboard/releases/latest/download/dist-cdn-fonts.zip
 # API 控制器监听地址和端口
-external-controller: '[::]:9090'
+external-controller: "[::]:9090"
 # API 访问密钥
 secret: xymhh
 # 清空静态proxies，完全依赖proxy-providers

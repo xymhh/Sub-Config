@@ -1,14 +1,14 @@
 proxy-providers:
-
-  前置订阅: 
+  前置订阅:
     type: http
     url: "" # 代理订阅链接
-    interval: 3600 # 1小时自动更新一次节点
+    interval: 36000 # 1小时自动更新一次节点
     path: ./provider/proxy/prefix.yaml # 缓存文件路径
     health-check:
       enable: true
       url: http://www.gstatic.com/generate_204
-      interval: 600
+      interval: 1800
+      lazy: true
     override:
       udp: true
       additional-prefix: "🚀 | "
@@ -16,39 +16,42 @@ proxy-providers:
   落地订阅:
     type: http
     url: "" # 代理订阅链接
-    interval: 3600 # 1小时自动更新一次节点
+    interval: 36000 # 1小时自动更新一次节点
     path: ./provider/proxy/land.yaml # 缓存文件路径
     health-check:
       enable: true
       url: http://www.gstatic.com/generate_204
-      interval: 600
+      interval: 1800
+      lazy: true
     override:
       udp: true
       dialer-proxy: 前置节点
       additional-prefix: "🏠 | "
 
-  中转订阅: 
+  中转订阅:
     type: http
     url: "" # 代理订阅链接
-    interval: 3600 # 1小时自动更新一次节点
+    interval: 36000 # 1小时自动更新一次节点
     path: ./provider/proxy/transit.yaml # 缓存文件路径
     health-check:
       enable: true
       url: http://www.gstatic.com/generate_204
-      interval: 600
+      interval: 1800
+      lazy: true
     override:
       udp: true
       additional-prefix: "🎯 | "
 
-  机场订阅: 
+  机场订阅:
     type: http
     url: "" # 代理订阅链接
-    interval: 3600 # 1小时自动更新一次节点
+    interval: 36000 # 1小时自动更新一次节点
     path: ./provider/proxy/airport.yaml # 缓存文件路径
     health-check:
       enable: true
       url: http://www.gstatic.com/generate_204
-      interval: 600
+      interval: 1800
+      lazy: true
     override:
       udp: true
       additional-prefix: "✈️ | "
