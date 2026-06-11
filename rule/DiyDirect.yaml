@@ -105,3 +105,10 @@ payload:
   # ai 公益站
   - DOMAIN-SUFFIX,elysia.h-e.top
   - DOMAIN-SUFFIX,muyuan.do
+
+  # Teredo 服务器
+  - DOMAIN-SUFFIX,ipv6.microsoft.com,DIRECT
+  - DOMAIN-SUFFIX,win10.ipv6.microsoft.com,DIRECT
+  - DOMAIN-SUFFIX,win1910.ipv6.microsoft.com,DIRECT
+  - DOMAIN-SUFFIX,teredo.ipv6.microsoft.com,DIRECT
+  - DOMAIN-KEYWORD,teredo,DIRECT
