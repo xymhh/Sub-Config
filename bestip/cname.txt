@@ -1,11 +1,10 @@
-www.nexusmods.com#SG
-www.vastnovel.com#SG
-openai.com#SG
-www.sage.com#SG
-hfqek.cf.3666888.xyz#SG
-
-baka.fun#JP
-www.swowd.com#JP
-jp.111000.cc.cd:443#JP
-saas.sin.fan:443#JP
-freeyx.cloudflare88.eu.org:443#JP
+www.nexusmods.com#🇸🇬 SG-01
+www.vastnovel.com#🇸🇬 SG-02
+openai.com#🇸🇬 SG-03
+www.sage.com#🇸🇬 SG-04
+hfqek.cf.3666888.xyz#🇸🇬 SG-05
+baka.fun#🇯🇵 JP-01
+www.swowd.com#🇯🇵 JP-02
+jp.111000.cc.cd:443#🇯🇵 JP-03
+saas.sin.fan:443#🇯🇵 JP-04
+freeyx.cloudflare88.eu.org:443#🇯🇵 JP-05
