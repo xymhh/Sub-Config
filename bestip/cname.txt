@@ -8,3 +8,12 @@ www.swowd.com#🇯🇵 JP-02
 jp.111000.cc.cd:443#🇯🇵 JP-03
 saas.sin.fan:443#🇯🇵 JP-04
 freeyx.cloudflare88.eu.org:443#🇯🇵 JP-05
+162.159.198.1:443#🌐 QMS-IP-01
+162.159.197.1:443#🌐 QMS-IP-02
+cf.877774.xyz:443#🌐 QMS-3NET
+ct.877774.xyz:443#🌐 QMS-CT
+cu.877774.xyz:443#🌐 QMS-CU
+cmcc.877774.xyz:443#🌐 QMS-CMCC
+asia.877774.xyz:443#🌐 QMS-ASIA
+na.877774.xyz:443#🌐 QMS-NA
+eur.877774.xyz:443#🌐 QMS-EU

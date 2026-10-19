@@ -3,7 +3,7 @@
 
 用法：
     python3 clean.py cname.txt ip.txt                      # 原地改写，保留原顺序
-    python3 clean.py --url <订阅/优选列表URL> --prefix QMS -o qms.txt   # 拉取远端并生成
+    python3 clean.py --url <优选列表URL> --prefix QMS -o cname.txt --append  # 拉取远端并合并进列表
 
 规则：
     1. 删除空行、注释行；
@@ -12,6 +12,7 @@
     4. 无法识别地区时用 🌐 CF。
 """
 import argparse
+import os
 import re
 import sys
 import urllib.request
@@ -76,12 +77,18 @@ def main(argv):
     parser.add_argument('--url', help='改为从远程拉取并清洗')
     parser.add_argument('-o', '--out', help='配合 --url 使用的输出文件')
     parser.add_argument('--prefix', default='CF', help='无法识别地区时的名称前缀')
+    parser.add_argument('--append', action='store_true', help='配合 --url：追加到 -o 指定文件，已存在的地址跳过')
     args = parser.parse_args(argv)
 
     if args.url:
         if not args.out:
             parser.error('--url 需要配合 -o/--out')
         result = clean(fetch(args.url), args.prefix)
+        if args.append:
+            existing = open(args.out, encoding='utf-8').read().splitlines() if os.path.exists(args.out) else []
+            have = {line.partition('#')[0].strip().lower() for line in existing if line.strip()}
+            result = [line for line in result if line.partition('#')[0].strip().lower() not in have]
+            result = existing + result
         with open(args.out, 'w', encoding='utf-8') as f:
             f.write('\n'.join(result) + '\n')
         print(f'{args.out}: {len(result)} 条')
