@@ -1,19 +1,19 @@
-www.nexusmods.com#🇸🇬 SG-01
-www.vastnovel.com#🇸🇬 SG-02
-openai.com#🇸🇬 SG-03
-www.sage.com#🇸🇬 SG-04
-hfqek.cf.3666888.xyz#🇸🇬 SG-05
-baka.fun#🇯🇵 JP-01
-www.swowd.com#🇯🇵 JP-02
-jp.111000.cc.cd:443#🇯🇵 JP-03
-saas.sin.fan:443#🇯🇵 JP-04
-freeyx.cloudflare88.eu.org:443#🇯🇵 JP-05
-162.159.198.1:443#🌐 QMS-IP-01
-162.159.197.1:443#🌐 QMS-IP-02
-cf.877774.xyz:443#🌐 QMS-3NET
-ct.877774.xyz:443#🌐 QMS-CT
-cu.877774.xyz:443#🌐 QMS-CU
-cmcc.877774.xyz:443#🌐 QMS-CMCC
-asia.877774.xyz:443#🌐 QMS-ASIA
-na.877774.xyz:443#🌐 QMS-NA
-eur.877774.xyz:443#🌐 QMS-EU
+www.nexusmods.com#新加坡-01
+www.vastnovel.com#新加坡-02
+openai.com#新加坡-03
+www.sage.com#新加坡-04
+hfqek.cf.3666888.xyz#新加坡-05
+baka.fun#日本-01
+www.swowd.com#日本-02
+jp.111000.cc.cd:443#日本-03
+saas.sin.fan:443#日本-04
+freeyx.cloudflare88.eu.org:443#日本-05
+162.159.198.1:443#秋名山-IP-01
+162.159.197.1:443#秋名山-IP-02
+cf.877774.xyz:443#秋名山-三网
+ct.877774.xyz:443#秋名山-电信
+cu.877774.xyz:443#秋名山-联通
+cmcc.877774.xyz:443#秋名山-移动
+asia.877774.xyz:443#秋名山-亚洲
+na.877774.xyz:443#秋名山-美洲
+eur.877774.xyz:443#秋名山-欧洲
