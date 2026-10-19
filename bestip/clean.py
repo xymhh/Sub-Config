@@ -2,8 +2,8 @@
 """优选 IP/域名列表节点名规范化（Clash 友好版）。
 
 命名规则：
-    地区节点   -> 新加坡-01 / 日本-02   （中文地区 + 两位序号）
-    来源节点   -> 秋名山-电信 / 秋名山-三网 （来源 + 线路）
+    地区节点   -> 香港01 / 日本-02 / 圣何塞03（同一城市有多家运营商时才带运营商）
+    来源节点   -> 秋名山-电信 / 秋名山-三网
     无法识别   -> 秋名山-IP-01
     不带 emoji、不带延迟数字（延迟由客户端测速显示）。
 
@@ -23,31 +23,41 @@ REGION_CN = {
     'FR': '法国', 'CA': '加拿大', 'AU': '澳大利亚', 'RU': '俄罗斯',
 }
 
+AIRPORT_CN = {
+    'HKG': '香港', 'TPE': '台北', 'NRT': '东京', 'HND': '东京', 'KIX': '大阪',
+    'SIN': '新加坡', 'SJC': '圣何塞', 'LAX': '洛杉矶', 'SEA': '西雅图',
+    'FRA': '法兰克福', 'AMS': '阿姆斯特丹', 'LHR': '伦敦', 'CDG': '巴黎',
+    'SYD': '悉尼', 'ICN': '首尔',
+}
+
 LABEL_CN = {
     '3NET': '三网', 'CT': '电信', 'CU': '联通', 'CMCC': '移动',
     'ASIA': '亚洲', 'NA': '美洲', 'EU': '欧洲', 'IP': 'IP',
-    '三网': '三网', '电信': '电信', '联通': '联通', '移动': '移动',
-    '亚洲': '亚洲', '美洲': '美洲', '欧洲': '欧洲',
 }
+
+OPS = ('移动', '联通', '电信')
 
 PREFIX_CN = {'QMS': '秋名山'}
 
 LINE_RE = re.compile(r'^(\[[0-9a-fA-F:]+\]|[\w.-]+)(:\d+)?$')
 
 
-def detect_region(name):
-    """英文地区码或中文地区名 -> 中文地区名。"""
+def detect_city(name):
+    """机场三字码 / 英文地区码 / 中文城市名 -> 中文城市名。"""
+    m = re.search(r'\b(HKG|TPE|NRT|HND|KIX|SIN|SJC|LAX|SEA|FRA|AMS|LHR|CDG|SYD|ICN)\b', name.upper())
+    if m:
+        return AIRPORT_CN[m.group(1)]
     m = re.search(r'\b(SG|JP|HK|TW|KR|US|DE|GB|UK|NL|FR|CA|AU|RU)\b', name.upper())
     if m:
         return REGION_CN[m.group(1)]
-    for cn in sorted(set(REGION_CN.values()), key=len, reverse=True):
+    cities = set(REGION_CN.values()) | set(AIRPORT_CN.values())
+    for cn in sorted(cities, key=len, reverse=True):
         if cn in name:
             return cn
     return None
 
 
 def detect_label(name):
-    """线路标签：中文优先，其次英文缩写。"""
     for cn in ('三网', '电信', '联通', '移动', '亚洲', '美洲', '欧洲'):
         if cn in name:
             return cn
@@ -55,9 +65,14 @@ def detect_label(name):
     return LABEL_CN[m.group(1)] if m else None
 
 
+def is_promo(remark):
+    return 'BestCF.pages.dev' in remark or 'WeTest优选' in remark
+
+
 def clean(lines, prefix='QMS'):
     prefix_cn = PREFIX_CN.get(prefix.upper(), prefix)
-    seen, groups = set(), {}
+    seen, city_items, other_groups = set(), {}, {}
+
     for raw in lines:
         line = raw.strip()
         if not line or line.startswith('#') or line.startswith('//'):
@@ -66,24 +81,39 @@ def clean(lines, prefix='QMS'):
         addr = addr.strip()
         if not LINE_RE.match(addr):
             continue
+        if is_promo(remark):
+            continue
         key = addr.lower()
         if key in seen:
             continue
         seen.add(key)
 
-        region = detect_region(remark)
-        if region:
-            group, display = f'R:{region}', region
+        city = detect_city(remark)
+        op = next((o for o in OPS if o in remark), None)
+        if city:
+            city_items.setdefault(city, []).append((addr, op))
         else:
             label = detect_label(remark)
-            group = f'L:{label or "IP"}'
-            display = f'{prefix_cn}-{label or "IP"}'
-        groups.setdefault(group, []).append((addr, display))
+            other_groups.setdefault(label or 'IP', []).append(addr)
 
     out = []
-    for items in groups.values():
-        for i, (addr, display) in enumerate(items, 1):
-            name = display if len(items) == 1 else f'{display}-{i:02d}'
+    for city, items in city_items.items():
+        ops = {op for _, op in items if op}
+        if len(ops) > 1:
+            subgroups = {}
+            for addr, op in items:
+                subgroups.setdefault(op or '其他', []).append(addr)
+            for op, addrs in subgroups.items():
+                for i, addr in enumerate(addrs, 1):
+                    out.append(f'{addr}#{city}{op}-{i:02d}')
+        else:
+            for i, (addr, _) in enumerate(items, 1):
+                out.append(f'{addr}#{city}-{i:02d}')
+
+    for label, addrs in other_groups.items():
+        display = f'{prefix_cn}-{label}'
+        for i, addr in enumerate(addrs, 1):
+            name = display if len(addrs) == 1 else f'{display}-{i:02d}'
             out.append(f'{addr}#{name}')
     return out
 
