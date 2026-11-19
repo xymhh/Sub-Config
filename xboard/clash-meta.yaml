@@ -1,0 +1,216 @@
+# ============================================================
+# Xboard - Mihomo 原生配置模板（修复节点重复）
+# ============================================================
+
+# 节点列表（由 Xboard 自动注入）
+proxies: []
+
+# 策略组（Proxy Groups）
+proxy-groups:
+  # 1. 基础调度组（由 Xboard 自动填充所有节点，移除 include-all 解决重复）
+  - name: "节点选择"
+    type: select
+    proxies: []
+    icon: "https://ghfast.top/https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png"
+
+  - name: "自动选择"
+    type: url-test
+    proxies: []
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+    icon: "https://ghfast.top/https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png"
+
+  - name: "故障转移"
+    type: fallback
+    proxies: []
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    icon: "https://ghfast.top/https://raw.githubusercontent.com/Orz-3/mini/master/Color/Auto.png"
+
+  # 2. 业务分流组
+  - name: "全球加速"
+    type: select
+    proxies: ["自动选择", "故障转移", "节点选择", "DIRECT"]
+    icon: "https://ghfast.top/https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png"
+
+  - name: "AI 服务"
+    type: select
+    proxies: ["节点选择", "自动选择", "故障转移", "DIRECT"]
+    icon: "https://ghfast.top/https://raw.githubusercontent.com/Orz-3/mini/master/Color/Roundrobin.png"
+
+  - name: "海外服务"
+    type: select
+    proxies: ["自动选择", "故障转移", "节点选择", "DIRECT"]
+    icon: "https://ghfast.top/https://raw.githubusercontent.com/Orz-3/mini/master/Color/Google.png"
+
+  - name: "AdBlock"
+    type: select
+    proxies: [REJECT]
+    icon: "https://ghfast.top/https://raw.githubusercontent.com/Orz-3/mini/master/Color/Adblock.png"
+
+  - name: "兜底分流"
+    type: select
+    proxies: ["全球加速", "自动选择", "故障转移", "节点选择", "DIRECT"]
+    icon: "https://ghfast.top/https://raw.githubusercontent.com/Orz-3/mini/master/Color/Final.png"
+
+# 规则提供者（Rule Providers）
+rule-providers:
+  ads:
+    behavior: domain
+    interval: 86400
+    path: ./provider/rule-set/ads.mrs
+    format: mrs
+    type: http
+    url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ads-all.mrs"
+
+  gfw:
+    behavior: domain
+    interval: 86400
+    path: ./provider/rule-set/gfw.mrs
+    format: mrs
+    type: http
+    url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/gfw.mrs"
+
+  geolocation-!cn:
+    behavior: domain
+    interval: 86400
+    path: ./provider/rule-set/geolocation-!cn.mrs
+    format: mrs
+    type: http
+    url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/geolocation-!cn.mrs"
+
+  category-ai-!cn:
+    behavior: domain
+    interval: 86400
+    path: ./provider/rule-set/category-ai-!cn.mrs
+    format: mrs
+    type: http
+    url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ai-!cn.mrs"
+
+  cn-ip:
+    behavior: ipcidr
+    interval: 86400
+    path: ./provider/rule-set/cn_ip.mrs
+    format: mrs
+    type: http
+    url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/cn.mrs"
+
+  private:
+    behavior: ipcidr
+    interval: 86400
+    path: ./provider/rule-set/private.mrs
+    format: mrs
+    type: http
+    url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/private.mrs"
+
+  cn-domain:
+    behavior: domain
+    interval: 86400
+    path: ./provider/rule-set/cn_domain.mrs
+    format: mrs
+    type: http
+    url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/cn.mrs"
+
+  fake-ip-filter:
+    behavior: domain
+    format: text
+    interval: 86400
+    path: ./provider/rule-set/fake_ip_filter.list
+    type: http
+    url: "https://cdn.jsdelivr.net/gh/juewuy/ShellCrash@dev/public/fake_ip_filter.list"
+
+  custom-direct:
+    behavior: classical
+    interval: 86400
+    path: ./provider/rule-set/custom_direct.yaml
+    type: http
+    format: yaml
+    url: "https://ghfast.top/https://raw.githubusercontent.com/mufeng688/Sub-Config/refs/heads/main/rule/DiyDirect.yaml"
+
+  custom-proxy:
+    behavior: classical
+    interval: 86400
+    path: ./provider/rule-set/custom_proxy.yaml
+    type: http
+    format: yaml
+    url: "https://ghfast.top/https://raw.githubusercontent.com/mufeng688/Sub-Config/refs/heads/main/rule/DiyProxy.yaml"
+
+# 规则 (Rules)
+rules:
+  - RULE-SET,ads,AdBlock
+  - RULE-SET,private,DIRECT
+  - RULE-SET,custom-proxy,海外服务
+  - RULE-SET,custom-direct,DIRECT
+  - RULE-SET,cn-domain,DIRECT
+  - RULE-SET,cn-ip,DIRECT
+  - RULE-SET,category-ai-!cn,AI 服务
+  - RULE-SET,gfw,全球加速
+  - RULE-SET,geolocation-!cn,全球加速
+  - MATCH,兜底分流
+
+# 通用配置
+mode: rule
+mixed-port: 7890
+redir-port: 7891
+tproxy-port: 7892
+allow-lan: true
+bind-address: "*"
+ipv6: false
+unified-delay: true
+tcp-concurrent: true
+log-level: warning
+find-process-mode: 'off'
+global-client-fingerprint: chrome
+keep-alive-idle: 600
+keep-alive-interval: 15
+disable-keep-alive: false
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+# 嗅探
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+
+# 入站
+tun:
+  enable: false
+  stack: mixed
+  dns-hijack: ["any:53", "tcp://any:53"]
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+
+# DNS 设置
+dns:
+  enable: true
+  ipv6: false
+  respect-rules: true
+  enhanced-mode: fake-ip
+  fake-ip-filter-mode: blacklist
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - 'rule-set:fake-ip-filter'
+    - '+.msftconnecttest.com'
+    - '+.msftncsi.com'
+default-nameserver:
+  - tls://223.5.5.5
+  - tls://223.6.6.6
+nameserver:
+  - https://cloudflare-dns.com/dns-query
+  - https://dns.google/dns-query
+proxy-server-nameserver:
+  - https://doh.alidns.com/dns-query
+  - https://doh.pub/dns-query
+direct-nameserver:
+  - https://dns.alidns.com/dns-query
+  - https://doh.pub/dns-query
