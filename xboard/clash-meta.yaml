@@ -62,7 +62,7 @@ rule-providers:
     path: ./provider/rule-set/ads.mrs
     format: mrs
     type: http
-    url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ads-all.mrs"
+    url: "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ads-all.mrs"
 
   gfw:
     behavior: domain
@@ -70,7 +70,7 @@ rule-providers:
     path: ./provider/rule-set/gfw.mrs
     format: mrs
     type: http
-    url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/gfw.mrs"
+    url: "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/gfw.mrs"
 
   geolocation-!cn:
     behavior: domain
@@ -78,7 +78,7 @@ rule-providers:
     path: ./provider/rule-set/geolocation-!cn.mrs
     format: mrs
     type: http
-    url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/geolocation-!cn.mrs"
+    url: "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/geolocation-!cn.mrs"
 
   category-ai-!cn:
     behavior: domain
@@ -86,7 +86,7 @@ rule-providers:
     path: ./provider/rule-set/category-ai-!cn.mrs
     format: mrs
     type: http
-    url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ai-!cn.mrs"
+    url: "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ai-!cn.mrs"
 
   cn-ip:
     behavior: ipcidr
@@ -94,7 +94,7 @@ rule-providers:
     path: ./provider/rule-set/cn_ip.mrs
     format: mrs
     type: http
-    url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/cn.mrs"
+    url: "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/cn.mrs"
 
   private:
     behavior: ipcidr
@@ -102,7 +102,7 @@ rule-providers:
     path: ./provider/rule-set/private.mrs
     format: mrs
     type: http
-    url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/private.mrs"
+    url: "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/private.mrs"
 
   cn-domain:
     behavior: domain
@@ -110,7 +110,7 @@ rule-providers:
     path: ./provider/rule-set/cn_domain.mrs
     format: mrs
     type: http
-    url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/cn.mrs"
+    url: "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/cn.mrs"
 
   fake-ip-filter:
     behavior: domain
